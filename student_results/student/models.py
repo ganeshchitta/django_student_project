@@ -1,15 +1,15 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
-class Students(models.Model):
-    name = models.CharField(max_length=21, null=True)
-    student_id = models.CharField(max_length=10, null=True)
-    email = models.EmailField(max_length=254, unique=True, null=True)
+class StudentInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # Add any additional attributes you want
+    student_id = models.CharField(max_length=10)
     branch = models.CharField(max_length=27, null=True)
     current_year = models.IntegerField(null=True)
     section = models.CharField(max_length=5, null=True)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
 
-class Student_login(models.Model):
-    student_id = models.CharField(max_length=10)
-    password = models.CharField(max_length=10)
+    def __str__(self):
+        # Built-in attribute of django.contrib.auth.models.User !
+        return self.user.username

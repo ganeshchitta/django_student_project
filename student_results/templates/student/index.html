@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title> New Educational Institutions</title>
-</head>
-<body>
-<h1>Welcome to New Educational Institutions </h1>
-<div>
-<a href="">Student Login </a>
+{% extends "student/base.html" %}
+{% block body_block %}
+{% load static %}
+<div class="container">
+  <div class="jumbotron">
+    <h1> New institutions</h1>
+    {% if user.is_authenticated %}
+        <h2> Welcome {{ user.username }}! {{stud.profile_pic.name}} </h2>
+        <img src="{{ stud.profile_pic.url }}" alt="profile pic"></img>
+        <div class = "container">
+          <div class="jumbotron">
+          <a href="{}">Add students details</a>
+          </div>        
+        </div>
+    {% else %}
+        <h2>Welcome to the site!</h2>
+    {% endif %}
+  </div>
 </div>
-</body>
-</html>
+
+{% endblock %}
