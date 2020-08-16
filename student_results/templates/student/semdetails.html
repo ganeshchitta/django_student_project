@@ -1,0 +1,16 @@
+{% extends 'student/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h2><a href="{%url 'student:back' %}">Back</a></h2>
+      <h1>sem details</h1>
+      {% if semdetails %}
+      {{semdetails.subj1}}<br>
+      {{semdetails.subj2}}<br>
+      {{semdetails.subj3}}
+      {% else %}
+      <p> No details found </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

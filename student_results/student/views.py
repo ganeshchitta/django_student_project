@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from student.forms import UserForm, StudentInfoForm
-from student.models import StudentInfo
+from student.models import StudentInfo, StudentSemesterDetail
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -61,7 +61,6 @@ def register(request):
         # Was not an HTTP post so we just render the forms as blank.
         user_form = UserForm()
         profile_form = StudentInfoForm()
-        print("user_form",user_form)
     # This is the render and context dictionary to feed
     # back to the registration.html file page.
     return render(request,'student/registration.html',
@@ -84,10 +83,9 @@ def user_login(request):
                 login(request,user)
                 # Send the user back to some page.
                 # In this case their homepage.
-                import os
-                obj = list(StudentInfo.objects.filter(student_id=int(user.username)))[0]
-                return render(request, 'student/index.html', {'stud':obj,'user':user})
-                
+                obj = StudentInfo.objects.filter(user=user)[0]
+                sem_obj = StudentSemesterDetail.objects.filter(student_id=obj.student_id)
+                return render(request, 'student/index.html', {'stud':obj,'user':user,'sem':sem_obj})   
             else:
                 # If account is not active:
                 return HttpResponse("Your account is not active.")
@@ -98,3 +96,10 @@ def user_login(request):
     else:
         #Nothing has been provided for username or password.
         return render(request, 'student/login.html', {})
+
+def display(request, year, id):
+    s1 = list(StudentSemesterDetail.objects.filter(student_id=id, year=year))[0]
+    return render(request, 'student/semdetails.html', {"semdetails":s1})
+
+def back(request):
+    return reverse(user_login)

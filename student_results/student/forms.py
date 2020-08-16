@@ -11,4 +11,4 @@ class UserForm(forms.ModelForm):
 class StudentInfoForm(forms.ModelForm):
     class Meta():
         model = StudentInfo
-        fields = ('student_id','profile_pic','branch','current_year','section')
+        fields = ('student_id','profile_pic','branch','joining_year','section')

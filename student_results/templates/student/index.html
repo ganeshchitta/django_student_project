@@ -1,16 +1,20 @@
 {% extends "student/base.html" %}
 {% block body_block %}
-{% load static %}
 <div class="container">
   <div class="jumbotron">
     <h1> New institutions</h1>
     {% if user.is_authenticated %}
-        <h2> Welcome {{ user.username }}! {{stud.profile_pic.name}} </h2>
-        <img src="{{ stud.profile_pic.url }}" alt="profile pic"></img>
+        <h2> Welcome {{ user.username }}! </h2>  
+        <div class="pic">
+          <img src="{{stud.profile_pic.url}}" alt="{{stud.profile_pic.name}}">
+        </div>  
         <div class = "container">
           <div class="jumbotron">
-          <a href="{}">Add students details</a>
-          </div>        
+            <h3> click on any link to display speciifc semester results</h3>
+          {% for i in sem %}
+              <a href="{% url 'student:sem_year' i.year i.student_id %}"> year {{i.year}}</a><br>
+          {% endfor %}
+          </div>
         </div>
     {% else %}
         <h2>Welcome to the site!</h2>
